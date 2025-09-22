@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import Entities.Cliente;
 import Entities.Endereco;
-import Entities.Estado;
+import Enum.EstadoEnum;
 
 public class ClienteDAO {
 
@@ -36,7 +36,14 @@ public class ClienteDAO {
 	public static Optional<Cliente> buscarClienteByCpf(String cpf) {
 		List<Cliente> lista = listarTodosClientes();
 		return lista.stream()
-				.filter(c -> c.getCpf().equals(cpf))
+				.filter(c -> c.getCpf().equalsIgnoreCase(cpf))
+				.findFirst();
+	}
+	
+	public static Optional<Cliente> buscarClienteByNome(String nome) {
+		List<Cliente> lista = listarTodosClientes();
+		return lista.stream()
+				.filter(c -> c.getNome().equalsIgnoreCase(nome))
 				.findFirst();
 	}
  
@@ -109,7 +116,7 @@ public class ClienteDAO {
         String cidade = BaseDAO.unquote(parts[7].trim());
         String cep = BaseDAO.unquote(parts[8].trim());
         String estadoStr = BaseDAO.unquote(parts[9].trim().toUpperCase());
-        Estado estado = Estado.valueOf(estadoStr);
+        EstadoEnum estado = EstadoEnum.valueOf(estadoStr);
         
         Endereco endereco = new Endereco(logradouro, bairro, numero, complemento, cidade, cep, estado);
         return Optional.of(new Cliente(cpf, nome, email, endereco));
