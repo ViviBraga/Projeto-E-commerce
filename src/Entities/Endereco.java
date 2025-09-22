@@ -1,5 +1,7 @@
 package Entities;
 
+import Enum.EstadoEnum;
+
 public class Endereco {
 
 	private String logradouro;
@@ -8,18 +10,18 @@ public class Endereco {
 	private String complemento;
 	private String cidade;
 	private String cep;
-	private Estado estado;
+	private EstadoEnum estado;
 	
 	
 	public Endereco(String logradouro, String bairro, int numero, String complemento, String cidade, String cep,
-	        Estado estado) {
+	        EstadoEnum estado) {
 	    setLogradouro(logradouro);
 	    setBairro(bairro);
 	    setNumero(numero);
 	    setComplemento(complemento);
 	    setCidade(cidade);
 	    setCep(cep);
-	    setEstado(estado);
+	    setEstadoEnum(estado);
 	}
 
 	public String getLogradouro() {
@@ -54,7 +56,7 @@ public class Endereco {
 
 
 	public void setNumero(int numero) {
-		if(numero <= 0) {
+		if(numero < 0) {
 			throw new IllegalArgumentException("Número não pode ser negativo.");
 		}
 		this.numero = numero;
@@ -100,12 +102,12 @@ public class Endereco {
 	}
 
 
-	public Estado getEstado() {
+	public EstadoEnum getEstado() {
 		return estado;
 	}
 
 
-	public void setEstado(Estado estado) {
+	public void setEstadoEnum(EstadoEnum estado) {
 		if(estado == null) {
 			throw new IllegalArgumentException("Estado de preenchimento obrigatório.");
 		}
