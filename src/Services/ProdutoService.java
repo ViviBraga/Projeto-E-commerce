@@ -1,7 +1,9 @@
-package Entidades;
+package Services;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import Entities.Produto;
 
 public class ProdutoService {
     private List<Produto> produtos = new ArrayList<>();
