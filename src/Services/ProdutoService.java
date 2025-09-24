@@ -1,32 +1,39 @@
 package Services;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import Entities.Produto;
+import dao.ProdutoDAO;
 
 public class ProdutoService {
-    private List<Produto> produtos = new ArrayList<>();
 
     public void cadastrarProduto(Produto produto) {
-        produtos.add(produto);
+        boolean existe = ProdutoDAO.buscarProdutoById(produto.getId()).isPresent();
+        
+        if (existe) {
+        	throw new IllegalArgumentException("Produto já cadastrado com este id.");
+        }
+        ProdutoDAO.incluirProduto(produto);
     }
 
     public List<Produto> listarProdutos() {
-        return produtos;
+        return ProdutoDAO.listarTodosProdutos();
     }
 
     public Produto buscarPorNome(String nome) {
-        for (Produto p : produtos) {
-            if (p.getNome().equalsIgnoreCase(nome)) {
-                return p;
-            }
+    	Optional<Produto> produtoOptional = ProdutoDAO.buscarProdutoByNome(nome);
+        if (produtoOptional.isEmpty()) {
+        	return null;
         }
-        return null;
+        return produtoOptional.get();
     }
 
     public void atualizarProduto(Produto produto, String novaDescricao, double novoPreco) {
-        produto.setDescricao(novaDescricao);
-        produto.setPreco(novoPreco);
+    	Optional<Produto> produtoOptional = ProdutoDAO.buscarProdutoById(produto.getId());
+        if (produtoOptional.isEmpty()) {
+        	throw new IllegalArgumentException("Produto não localizado.");
+        }
+        ProdutoDAO.editarProduto(produto.getId(), produto.getNome(), novaDescricao, novoPreco);
     }
 }
