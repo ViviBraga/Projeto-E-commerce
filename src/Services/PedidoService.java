@@ -36,6 +36,7 @@ public class PedidoService {
     public void removerItem(Pedido pedido, Produto produto) {
         pedido.removerItem(produto);
         pedidoDAO.atualizar(pedido);
+        System.out.println("Item excluído com sucesso.");
     }
 
     public void realizarPagamento(Pedido pedido) {

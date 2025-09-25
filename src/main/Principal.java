@@ -120,7 +120,18 @@ public class Principal {
 					System.out.print("Digite o id do pedido que deseja pagar: ");
 					Long idPagar = entrada.nextLong();
 					Pedido pedidoPagar = pedidoService.buscarPorId(idPagar);
-					pedidoService.realizarPagamento(pedidoPagar);
+
+					if (pedidoPagar == null) {
+					    System.out.println("Pedido não encontrado com id " + idPagar);
+					} else {
+					    try {
+					        pedidoService.realizarPagamento(pedidoPagar);
+					        System.out.println("Pagamento realizado com sucesso!");
+					    } catch (IllegalStateException e) {
+					        System.out.println("Erro: " + e.getMessage());
+					    }
+					}
+					
 					pedidoService.realizarEntrega(pedidoPagar);
 					break;
 				case 5:
@@ -237,6 +248,7 @@ public class Principal {
 			String bairro = entrada.nextLine();
 			System.out.print("Digite o novo número do cliente: ");
 			int numero = entrada.nextInt();
+			entrada.nextLine();
 			System.out.print("Digite o novo complemento do cliente: ");
 			String complemento = entrada.nextLine();
 			System.out.print("Digite a nova cidade do cliente: ");
@@ -244,7 +256,7 @@ public class Principal {
 			System.out.print("Digite o novo cep do cliente: ");
 			String cep = entrada.nextLine();
 			System.out.print("Digite a nova sigla do estado do cliente: ");
-			String estado = entrada.nextLine().toLowerCase();
+			String estado = entrada.nextLine().toUpperCase();
 			
 			endereco = new Endereco(logradouro, bairro, numero, complemento, cidade, cep, EstadoEnum.valueOf(estado));
 		}
@@ -256,11 +268,11 @@ public class Principal {
 		System.out.print("Digite o nome do produto: ");
 		String nome = entrada.nextLine();
 		System.out.print("Digite a descrição do produto: ");
-		String cpf = entrada.nextLine();
+		String descricao = entrada.nextLine();
 		System.out.print("Digite o preço do produto: ");
 		double preco = entrada.nextDouble();
 		
-		return new Produto(nome, cpf, preco);
+		return new Produto(nome, descricao, preco);
 	}
 	
 	private static void editarProduto(Scanner entrada) {

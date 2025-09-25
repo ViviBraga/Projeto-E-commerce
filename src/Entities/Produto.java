@@ -2,8 +2,11 @@ package Entities;
 
 import java.time.LocalDateTime;
 
+import dao.ProdutoDAO;
+
 public class Produto {
-    private static int contadorId = 1;
+	private static int contadorId = 1; 
+
     private int id;
     private String nome;
     private String descricao;
@@ -11,7 +14,7 @@ public class Produto {
     private LocalDateTime dataCadastro;
 
     public Produto(String nome, String descricao, double preco) {
-        this.id = contadorId++;
+        this.id = gerarIdUnico();
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
@@ -37,9 +40,19 @@ public class Produto {
     public void setPreco(double preco) { this.preco = preco; }
     public LocalDateTime getDataCadastro() { return dataCadastro; }
 
+    public static int gerarIdUnico() {
+        while (ProdutoDAO.buscarProdutoById(contadorId).isPresent()) {
+            contadorId++;
+        }
+        return contadorId++;
+    }
+    
     @Override
     public String toString() {
-        return "ID: " + id + ", Nome: " + nome + ", Descrição: " + descricao +
-                ", Preço: R$" + preco + ", Data de Cadastro: " + dataCadastro;
+        return String.format(
+            "ID: %d%nNome: %s%nDescrição: %s%nPreço: R$ %.2f%nData de Cadastro: %s",
+            id, nome, descricao, preco, dataCadastro
+        );
     }
+
 }

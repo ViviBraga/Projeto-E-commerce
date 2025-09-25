@@ -118,7 +118,7 @@ public class Endereco {
 	@Override
 	public String toString() {
 	    return String.format(
-	        "Endereco [logradouro=%s, bairro=%s, numero=%d, complemento=%s, cidade=%s, cep=%s, estado=%s]",
+	        "Logradouro: %s, \nBairro: %s, \nNumero: %d, \nComplemento: %s, \nCidade: %s, \nCEP: %s, \nEstado: %s",
 	        logradouro, bairro, numero, complemento, cidade, cep, estado
 	    );
 	}

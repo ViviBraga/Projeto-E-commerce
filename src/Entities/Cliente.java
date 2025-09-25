@@ -91,7 +91,7 @@ public class Cliente {
 	@Override
 	public String toString() {
 	    return String.format(
-	        "Cliente [nome=%s, cpf=%s, email=%s, endereco=%s]",
+	        "Cliente Nome: %s, \nCPF: %s, \nEmail: %s, \nEndereco: %s",
 	        nome, cpf, email, endereco
 	    );
 	}
