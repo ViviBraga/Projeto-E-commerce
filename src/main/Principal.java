@@ -26,6 +26,7 @@ public class Principal {
 		while (executando) {
 			System.out.print(Menu.gerarMenuPrincipal());
 			int opcao = entrada.nextInt();
+			entrada.nextLine();
 			switch (opcao) {
 				case 1:
 					menuCliente(entrada);
@@ -50,6 +51,7 @@ public class Principal {
 		while (executando) {
 			System.out.print(Menu.gerarMenuCliente());
 			int opcao = entrada.nextInt();
+			entrada.nextLine();
 			switch (opcao) {
 				case 1:
 					Cliente cliente = lerCliente(entrada);
@@ -74,6 +76,7 @@ public class Principal {
 		while (executando) {
 			System.out.print(Menu.gerarMenuProduto());
 			int opcao = entrada.nextInt();
+			entrada.nextLine();
 			switch (opcao) {
 				case 1:
 					Produto produto = lerProduto(entrada);
@@ -98,6 +101,7 @@ public class Principal {
 		while (executando) {
 			System.out.print(Menu.gerarMenuPedidos());
 			int opcao = entrada.nextInt();
+			entrada.nextLine();
 			switch (opcao) {
 				case 1:
 					menuPedido(entrada, null);
@@ -140,6 +144,7 @@ public class Principal {
 		while (executando) {
 			System.out.print(Menu.gerarMenuPedido());
 			int opcao = entrada.nextInt();
+			entrada.nextLine();
 			switch (opcao) {
 				case 1:
 					System.out.print("Digite o seu nome do produto: ");
@@ -171,26 +176,27 @@ public class Principal {
 	}
 	
 	private static Cliente lerCliente(Scanner entrada) {
-		System.out.print("Digite o nome do cliente: ");
+		System.out.println("Digite o nome do cliente: ");
 		String nome = entrada.nextLine();
-		System.out.print("Digite o cpf do cliente: ");
+		System.out.println("Digite o cpf do cliente: ");
 		String cpf = entrada.nextLine();
-		System.out.print("Digite o email do cliente: ");
+		System.out.println("Digite o email do cliente: ");
 		String email = entrada.nextLine();
-		System.out.print("Digite o logradouro do endereço do cliente: ");
+		System.out.println("Digite o logradouro do endereço do cliente: ");
 		String logradouro = entrada.nextLine();
-		System.out.print("Digite o bairro do endereço do cliente: ");
+		System.out.println("Digite o bairro do endereço do cliente: ");
 		String bairro = entrada.nextLine();
-		System.out.print("Digite o número do endereço do cliente: ");
+		System.out.println("Digite o número do endereço do cliente: ");
 		int numero = entrada.nextInt();
-		System.out.print("Digite o complemento do endereço do cliente: ");
+		entrada.nextLine();
+		System.out.println("Digite o complemento do endereço do cliente: ");
 		String complemento = entrada.nextLine();
-		System.out.print("Digite a cidade do endereço do cliente: ");
+		System.out.println("Digite a cidade do endereço do cliente: ");
 		String cidade = entrada.nextLine();
-		System.out.print("Digite o cep do endereço do cliente: ");
+		System.out.println("Digite o cep do endereço do cliente: 00000-000 ");
 		String cep = entrada.nextLine();
-		System.out.print("Digite a sigla do estado do endereço do cliente: ");
-		String estado = entrada.nextLine().toLowerCase();
+		System.out.println("Digite a sigla do estado do endereço do cliente: ");
+		String estado = entrada.nextLine().toUpperCase();
 		
 		Endereco endereco = new Endereco(logradouro, bairro, numero, complemento, cidade, cep, EstadoEnum.valueOf(estado));
 		return new Cliente(cpf, nome, email, endereco);

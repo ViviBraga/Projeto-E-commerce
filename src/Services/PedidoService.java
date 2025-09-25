@@ -17,12 +17,15 @@ public class PedidoService {
     public Pedido criarPedido(Cliente cliente) {
         Pedido p = new Pedido(cliente);
         pedidoDAO.salvar(p);
+
         return p;
     }
 
     public void adicionarItem(Pedido pedido, Produto produto, int quantidade) {
         pedido.adicionarItem(produto, quantidade);
         pedidoDAO.atualizar(pedido);
+        Notificacao notificacao = new Notificacao(pedido.getCliente().getEmail());
+        notificacao.notificarFinalizacaoPedido(pedido.getId().intValue());
     }
 
     public void alterarQuantidade(Pedido pedido, Produto produto, int quantidade) {
@@ -38,11 +41,17 @@ public class PedidoService {
     public void realizarPagamento(Pedido pedido) {
         pedido.realizarPagamento();
         pedidoDAO.atualizar(pedido);
+        Notificacao notificacao = new Notificacao(pedido.getCliente().getEmail());
+        notificacao.notificarPagamentoRealizado(pedido.getId().intValue());
+
     }
 
     public void realizarEntrega(Pedido pedido) {
         pedido.realizarEntrega();
         pedidoDAO.atualizar(pedido);
+        Notificacao notificacao = new Notificacao(pedido.getCliente().getEmail());
+        notificacao.notificarEntregaRealizada(pedido.getId().intValue());
+
     }
 
     public List<Pedido> listarPedidos() {

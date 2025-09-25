@@ -8,6 +8,7 @@ import java.util.Objects;
 import Enum.Status;
 
 public class Pedido {
+	private static long proximoId = 1;
     private Long id; 
     private Cliente cliente;
     private LocalDateTime dataCriacao;
@@ -15,6 +16,7 @@ public class Pedido {
     private List<ItemPedido> itens;
 
     public Pedido(Cliente cliente) {
+    	this.id = proximoId++; 
         this.cliente = cliente;
         this.dataCriacao = LocalDateTime.now();
         this.status = Status.ABERTO;
@@ -35,6 +37,7 @@ public class Pedido {
         }
         ItemPedido novo = new ItemPedido(produto, quantidade);
         itens.add(novo);
+        System.out.println("Pedido criado com sucesso! ID do pedido: " + getId());
     }
 
     public void removerItem(Produto produto) {
@@ -137,5 +140,24 @@ public class Pedido {
 	public void setItens(List<ItemPedido> itens) {
 		this.itens = itens;
 	}
+	
+	@Override
+	public String toString() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("Pedido ID: ").append(id)
+	      .append("\nCliente: ").append(cliente.getNome())
+	      .append("\nData: ").append(dataCriacao)
+	      .append("\nStatus: ").append(status)
+	      .append("\nItens:\n");
+	    for (ItemPedido ip : itens) {
+	        sb.append(" - ").append(ip.getProduto().getNome())
+	          .append(" x ").append(ip.getQuantidade())
+	          .append(" = R$ ").append(ip.getSubtotal())
+	          .append("\n");
+	    }
+	    sb.append("Total: R$ ").append(calcularTotal());
+	    return sb.toString();
+	}
+
 
 }
